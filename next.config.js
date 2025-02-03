@@ -1,19 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@ant-design', 'antd'],
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/uploads/**',
-      },
-    ],
+  output: 'standalone',
+  experimental: {
+    // 启用独立构建模式
+    outputStandalone: true,
   },
-  webpack: (config) => {
-    return config;
+  webpack: (config, { isServer }) => {
+    // 确保 webpack 能正确解析路径别名
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, 'src'),
+    }
+    return config
   },
-};
+}
 
-module.exports = nextConfig; 
+module.exports = nextConfig 
