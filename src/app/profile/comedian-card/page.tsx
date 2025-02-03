@@ -53,7 +53,7 @@ export default function ComedianCardPage() {
  * @param {string} props.avatar - 演员头像
  * @param {string[]} props.photos - 演员相册
  */
-const ComedianCard = ({ avatar, photos }) => {
+const ComedianCard = ({ avatar, photos }: { avatar: string; photos: string[] }) => {
     return (
         <div>
             <img src={`${process.env.STATIC_FILE_BASE_URL}${avatar}`} alt="演员头像" />
