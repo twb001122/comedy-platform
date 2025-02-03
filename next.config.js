@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
+    unoptimized: true,
     domains: ['localhost'],
     remotePatterns: [
       {
@@ -23,6 +24,12 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': require('path').resolve(__dirname, 'src'),
     }
+    // 优化代码分割策略
+    config.optimization.splitChunks = {
+      chunks: 'all',
+      maxSize: 256000, // 单个 chunk 最大 250KB
+      minSize: 20000,
+    };
     return config;
   },
   experimental: {
