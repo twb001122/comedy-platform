@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { User } from '@/models/User';
 import { connectToDatabase } from '@/lib/db';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * 更新用户角色

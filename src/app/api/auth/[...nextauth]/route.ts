@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { connectDB } from '@/lib/db';
 import { User } from '@/models/User';
 
+
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -59,6 +60,4 @@ const handler = NextAuth({
   },
 });
 
-export { handler as GET, handler as POST };
-
-export const runtime = 'nodejs'; 
+export { handler as GET, handler as POST }; 
