@@ -15,7 +15,7 @@ export default function CitySelector({ value, onChange }: CitySelectorProps) {
   const options = citiesData.provinces.flatMap(province => 
     province.cities.map(city => ({
       label: `${province.name} - ${city.name}`,
-      value: city.code
+      value: `${province.name} - ${city.name}`
     }))
   );
 
