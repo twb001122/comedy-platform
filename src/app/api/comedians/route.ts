@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/db';
 import { ComedianProfile } from '@/models/ComedianProfile';
 import { User } from '@/models/User';
 
+export const runtime = 'nodejs';
+
 /**
  * 获取演员列表
  */

@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/db';
 import { User } from '@/models/User';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
+
 // 注册表单验证模式
 const registerSchema = z.object({
   email: z.string().email('请输入有效的邮箱地址'),

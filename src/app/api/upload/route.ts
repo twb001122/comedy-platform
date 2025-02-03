@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { processAvatar, processPhoto } from '@/lib/image';
+export const runtime = 'nodejs';
 
 /**
  * 文件上传处理

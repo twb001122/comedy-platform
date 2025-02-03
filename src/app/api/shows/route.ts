@@ -5,6 +5,8 @@ import { connectToDatabase } from '@/lib/db';
 import { Show } from '@/models/Show';
 import { User } from '@/models/User';
 
+export const runtime = 'nodejs';
+
 /**
  * 发布演出
  */

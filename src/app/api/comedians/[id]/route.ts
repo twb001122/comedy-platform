@@ -5,6 +5,8 @@ import { ComedianProfile } from '@/models/ComedianProfile';
 /**
  * 获取单个演员详情
  */
+export const runtime = 'nodejs';
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
