@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface ExtendedSession {
   user?: {
@@ -18,9 +19,15 @@ export default function ComedianCardPage() {
   const router = useRouter();
   const { data: session } = useSession() as { data: ExtendedSession | null };
 
-  // 如果未登录或不是演员身份，重定向到个人中心
+  useEffect(() => {
+    // 在客户端检查用户身份并重定向
+    if (!session?.user || session.user.role !== 'comedian') {
+      router.push('/profile');
+    }
+  }, [session, router]);
+
+  // 在加载状态或未授权状态下显示空内容
   if (!session?.user || session.user.role !== 'comedian') {
-    router.push('/profile');
     return null;
   }
 
