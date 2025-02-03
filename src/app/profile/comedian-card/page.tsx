@@ -45,4 +45,23 @@ export default function ComedianCardPage() {
       </div>
     </div>
   );
-} 
+}
+
+/**
+ * 组件用于显示喜剧演员卡片
+ * @param {Object} props - 组件属性
+ * @param {string} props.avatar - 演员头像
+ * @param {string[]} props.photos - 演员相册
+ */
+const ComedianCard = ({ avatar, photos }) => {
+    return (
+        <div>
+            <img src={`${process.env.STATIC_FILE_BASE_URL}${avatar}`} alt="演员头像" />
+            <div>
+                {photos.map(photo => (
+                    <img key={photo} src={`${process.env.STATIC_FILE_BASE_URL}${photo}`} alt="演员照片" />
+                ))}
+            </div>
+        </div>
+    );
+}; 
