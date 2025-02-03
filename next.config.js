@@ -22,6 +22,7 @@ const nextConfig = {
       }
     ],
   },
+  
   webpack: (config, { isServer }) => {
     // 确保 webpack 能正确解析路径别名
     config.resolve.alias = {

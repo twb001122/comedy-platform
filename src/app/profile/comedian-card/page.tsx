@@ -39,7 +39,7 @@ export default function ComedianCardPage() {
             <h2 className="text-xl font-semibold text-gray-800">编辑演员资料卡</h2>
           </div>
           <div className="p-6">
-            <p className="text-gray-500">演员资料卡编辑功能即将上线...</p>
+            <p className="text-gray-500">演员资料编辑功能即将上线...</p>
           </div>
         </div>
       </div>
