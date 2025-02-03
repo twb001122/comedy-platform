@@ -35,10 +35,6 @@ const nextConfig = {
       config.optimization = {
         ...config.optimization,
         minimize: true,
-        minimizer: [
-          '...',
-          new (require('css-minimizer-webpack-plugin'))(),
-        ],
         moduleIds: 'deterministic',
         runtimeChunk: 'single',
         splitChunks: {
