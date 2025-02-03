@@ -33,11 +33,15 @@ const nextConfig = {
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-              return `vendor.${packageName.replace('@', '')}`;
-            },
+            name: 'vendors',
+            chunks: 'all',
             priority: 10,
+          },
+          common: {
+            minChunks: 2,
+            name: 'common',
+            chunks: 'all',
+            priority: 1,
           },
         },
       },
