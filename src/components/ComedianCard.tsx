@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Tag } from 'antd';
+import Tag from 'antd/es/tag';
 import { useRouter } from 'next/navigation';
 
 interface ComedianCardProps {

@@ -36,11 +36,17 @@ const nextConfig = {
         cacheGroups: {
           default: false,
           vendors: false,
-          // 分离第三方库
+          // antd 单独分包
+          antd: {
+            name: 'antd',
+            priority: 30,
+            test: /[\\/]node_modules[\\/]antd[\\/]/,
+          },
+          // 其他第三方库
           vendor: {
             name: 'vendor',
             chunks: 'all',
-            test: /[\\/]node_modules[\\/]/,
+            test: /[\\/]node_modules[\\/](?!antd[\\/])/,
             priority: 20,
           },
           // 分离公共组件
@@ -59,7 +65,18 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    optimizePackageImports: ['antd']
+    optimizePackageImports: ['antd'],
+    // 启用 modularizeImports 优化
+    modularizeImports: {
+      antd: {
+        transform: 'antd/es/{{member}}',
+        preventFullImport: true,
+      },
+      '@ant-design/icons': {
+        transform: '@ant-design/icons/es/icons/{{member}}',
+        preventFullImport: true,
+      },
+    },
   },
   // 禁用不必要的优化
   swcMinify: true,

@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Divider, Skeleton } from 'antd';
+import Divider from 'antd/es/divider';
+import Skeleton from 'antd/es/skeleton';
 
 interface Show {
   _id: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { Select } from 'antd';
+import Select from 'antd/es/select';
 import citiesData from '@/data/cities.json';
 
 interface CitySelectorProps {
