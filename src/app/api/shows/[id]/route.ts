@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import { Show } from '@/models/Show';
 
+export const runtime = 'edge';
+
 /**
  * 获取单个演出详情的API路由处理函数
  */

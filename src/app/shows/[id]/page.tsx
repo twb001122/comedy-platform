@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Divider from 'antd/es/divider';
 import Skeleton from 'antd/es/skeleton';
 
+export const runtime = 'edge';
+
 interface Show {
   _id: string;
   title: string;
