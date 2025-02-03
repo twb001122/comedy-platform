@@ -13,9 +13,12 @@
 /out/
 .next
 out
+/dist/
+dist
 
 # production
 /build
+build/
 
 # misc
 .DS_Store
@@ -41,3 +44,5 @@ next-env.d.ts
 .cache
 **/cache
 **/*.pack
+.cache/
+**/.cache/

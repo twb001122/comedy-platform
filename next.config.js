@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  distDir: 'dist',
   images: {
     unoptimized: true,
     domains: ['localhost'],
@@ -52,7 +53,6 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
-  distDir: '.next',
   cleanDistDir: true,
 }
 
