@@ -92,6 +92,20 @@ export default function ComedianDetailPage({
     { condition: comedian.hasVarietyExp, label: '综艺', color: 'orange' },
   ].filter(tag => tag.condition);
 
+  /**
+   * 处理图片URL，添加Cloudflare R2基础地址
+   * @param path - 原始路径
+   * @returns 完整的URL
+   */
+  const getImageUrl = (path: string) => {
+    if (!path) return '/default-avatar.png';
+    
+    // 移除开头的斜杠（如果存在）
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    
+    return `https://www.xiaoleme.com/${cleanPath}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -124,7 +138,7 @@ export default function ComedianDetailPage({
                 {comedian.avatar ? (
                   <div className="relative w-24 h-24">
                     <Image
-                      src={comedian.avatar}
+                      src={getImageUrl(comedian.avatar)}
                       alt={comedian.stageName}
                       fill
                       className="rounded-full object-cover"
@@ -261,7 +275,7 @@ export default function ComedianDetailPage({
                     {comedian.photos.map((photo, index) => (
                       <div key={index} className="relative pt-[100%]">
                         <Image
-                          src={photo}
+                          src={getImageUrl(photo)}
                           alt={`${comedian.stageName}的照片 ${index + 1}`}
                           fill
                           className="absolute inset-0 object-cover rounded-lg"

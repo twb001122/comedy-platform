@@ -6,7 +6,7 @@ const nextConfig = {
     outputStandalone: true,
   },
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'xiaoleme.com', 'www.xiaoleme.com'],
     remotePatterns: [
       {
         protocol: 'https',
