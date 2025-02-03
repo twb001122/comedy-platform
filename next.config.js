@@ -19,54 +19,27 @@ const nextConfig = {
       }
     ],
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { dev, isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': require('path').resolve(__dirname, 'src'),
     };
 
+    // 禁用缓存
+    if (!isServer) {
+      config.cache = false;
+    }
+
     // 优化分包策略
     if (!isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 24000,
-        minChunks: 1,
-        maxAsyncRequests: 30,
-        maxInitialRequests: 30,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          framework: {
-            chunks: 'all',
-            name: 'framework',
-            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|next)[\\/]/,
-            priority: 40,
-            enforce: true,
-          },
-          lib: {
-            test: /[\\/]node_modules[\\/]/,
-            name(module, chunks, cacheGroupKey) {
-              const moduleFileName = module
-                .identifier()
-                .split('/')
-                .reduceRight((item) => item);
-              return `${cacheGroupKey}.${moduleFileName}`;
-            },
-            priority: 30,
-            minChunks: 1,
-            reuseExistingChunk: true,
-          },
-          commons: {
-            name: 'commons',
-            minChunks: 2,
-            priority: 20,
-          },
-          shared: {
-            name: false,
-            priority: 10,
-            reuseExistingChunk: true,
-            minChunks: 2,
+      config.optimization = {
+        ...config.optimization,
+        minimize: true,
+        runtimeChunk: false,
+        splitChunks: {
+          cacheGroups: {
+            default: false,
+            vendors: false,
           },
         },
       };
@@ -74,10 +47,13 @@ const nextConfig = {
     
     return config;
   },
+  generateBuildId: () => 'build',
   swcMinify: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  compress: true
+  compress: true,
+  distDir: '.next',
+  cleanDistDir: true,
 }
 
 module.exports = nextConfig; 
