@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "./scripts/dev.sh",
     "build": "next build",
+    "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint"
   },
@@ -29,6 +30,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.7",
     "@next/bundle-analyzer": "^15.1.6",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",

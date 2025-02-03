@@ -20,37 +20,11 @@ const nextConfig = {
       }
     ],
   },
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': require('path').resolve(__dirname, 'src'),
     };
-
-    // 优化构建配置
-    if (!isServer) {
-      // 禁用持久化缓存
-      config.cache = false;
-      
-      // 优化分包策略
-      config.optimization = {
-        ...config.optimization,
-        minimize: true,
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-          chunks: 'all',
-          maxInitialRequests: 20,
-          maxAsyncRequests: 20,
-          minSize: 40,
-          maxSize: 1000 * 244, // 244KB
-          cacheGroups: {
-            default: false,
-            vendors: false,
-          },
-        },
-      };
-    }
-    
     return config;
   },
   generateBuildId: () => 'build',
