@@ -54,12 +54,14 @@ export default function ComedianCardPage() {
  * @param {string[]} props.photos - 演员相册
  */
 const ComedianCard = ({ avatar, photos }: { avatar: string; photos: string[] }) => {
+    const baseUrl = "https://xiaoleme.com"; // 基础 URL
+
     return (
         <div>
-            <img src={`${process.env.STATIC_FILE_BASE_URL}${avatar}`} alt="演员头像" />
+            <img src={`${baseUrl}${avatar}`} alt="演员头像" />
             <div>
                 {photos.map(photo => (
-                    <img key={photo} src={`${process.env.STATIC_FILE_BASE_URL}${photo}`} alt="演员照片" />
+                    <img key={photo} src={`${baseUrl}${photo}`} alt="演员照片" />
                 ))}
             </div>
         </div>
