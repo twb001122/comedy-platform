@@ -6,7 +6,8 @@
     "dev": "./scripts/dev.sh",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "netlify-build": "next build"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.23.0",
@@ -21,6 +22,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.9.4",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
