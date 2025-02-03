@@ -19,66 +19,61 @@ const nextConfig = {
       }
     ],
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': require('path').resolve(__dirname, 'src'),
-    }
-    
-    // 优化代码分割策略
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
+    };
+
+    // 优化分包策略
+    if (!isServer) {
+      config.optimization.splitChunks = {
         chunks: 'all',
-        maxInitialRequests: 25,
         minSize: 20000,
-        maxSize: 250000,
+        maxSize: 24000,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
         cacheGroups: {
           default: false,
           vendors: false,
-          // antd 单独分包
-          antd: {
-            name: 'antd',
-            priority: 30,
-            test: /[\\/]node_modules[\\/]antd[\\/]/,
-          },
-          // 其他第三方库
-          vendor: {
-            name: 'vendor',
+          framework: {
             chunks: 'all',
-            test: /[\\/]node_modules[\\/](?!antd[\\/])/,
-            priority: 20,
-          },
-          // 分离公共组件
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            priority: 10,
-            reuseExistingChunk: true,
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|next)[\\/]/,
+            priority: 40,
             enforce: true,
           },
+          lib: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module, chunks, cacheGroupKey) {
+              const moduleFileName = module
+                .identifier()
+                .split('/')
+                .reduceRight((item) => item);
+              return `${cacheGroupKey}.${moduleFileName}`;
+            },
+            priority: 30,
+            minChunks: 1,
+            reuseExistingChunk: true,
+          },
+          commons: {
+            name: 'commons',
+            minChunks: 2,
+            priority: 20,
+          },
+          shared: {
+            name: false,
+            priority: 10,
+            reuseExistingChunk: true,
+            minChunks: 2,
+          },
         },
-      },
-    };
+      };
+    }
     
     return config;
   },
-  experimental: {
-    optimizePackageImports: ['antd'],
-    // 启用 modularizeImports 优化
-    modularizeImports: {
-      antd: {
-        transform: 'antd/es/{{member}}',
-        preventFullImport: true,
-      },
-      '@ant-design/icons': {
-        transform: '@ant-design/icons/es/icons/{{member}}',
-        preventFullImport: true,
-      },
-    },
-  },
-  // 禁用不必要的优化
   swcMinify: true,
   poweredByHeader: false,
   reactStrictMode: true,
