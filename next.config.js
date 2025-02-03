@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    // 启用独立构建模式
-    outputStandalone: true,
-  },
   images: {
     domains: ['localhost'],
     remotePatterns: [
@@ -22,13 +18,31 @@ const nextConfig = {
       }
     ],
   },
-  webpack: (config, { isServer }) => {
-    // 确保 webpack 能正确解析路径别名
+  webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': require('path').resolve(__dirname, 'src'),
     }
-    return config
+    // 添加代码分割优化
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 24000000, // 确保分割后的文件小于 25MB
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              return `vendor.${packageName.replace('@', '')}`;
+            },
+            priority: 10,
+          },
+        },
+      },
+    };
+    return config;
   },
 }
 
