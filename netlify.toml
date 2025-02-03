@@ -10,7 +10,7 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
   [plugins.inputs]
-    includeFiles = ["src/**/*"]
+    # includeFiles = ["src/**/*"]
 
 [[redirects]]
   from = "/*"
