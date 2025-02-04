@@ -35,15 +35,34 @@ const nextConfig = {
               name: 'commons',
               chunks: 'all',
               minChunks: 2,
+              reuseExistingChunk: true,
             },
             // 为大型依赖创建单独的块
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name(module) {
-                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-                return `vendor.${packageName.replace('@', '')}`;
+                try {
+                  // 添加安全检查
+                  if (!module || !module.context) {
+                    return 'vendor';
+                  }
+                  
+                  const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                  if (!match || !match[1]) {
+                    return 'vendor';
+                  }
+
+                  const packageName = match[1];
+                  // 限制文件名长度，避免可能的文件系统限制
+                  return `vendor.${packageName.replace('@', '').split('/')[0].substring(0, 30)}`;
+                } catch (error) {
+                  console.warn('Error in vendor chunk naming:', error);
+                  return 'vendor';
+                }
               },
               chunks: 'all',
+              priority: 10,
+              reuseExistingChunk: true,
             },
           },
         },
@@ -53,4 +72,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig
