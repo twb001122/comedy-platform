@@ -8,7 +8,9 @@ import { User } from '@/models/User';
  */
 declare module 'next-auth/jwt' {
   interface JWT {
-    id?: string;
+    id: string;
+    name?: string;
+    email?: string;
     role?: string;
   }
 }
@@ -19,19 +21,19 @@ declare module 'next-auth/jwt' {
 declare module 'next-auth' {
   interface Session {
     user: {
-      id?: string;
+      id: string;
       userId: string;
-      name?: string | null;
-      email?: string | null;
+      name?: string;
+      email?: string;
       role?: string;
-    };
+    }
   }
 
   interface User {
     id: string;
-    name: string;
-    email: string;
-    role: string;
+    name?: string;
+    email?: string;
+    role?: string;
   }
 }
 
@@ -82,24 +84,25 @@ export const authOptions: AuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id;
-        token.userId = user.id;
         token.role = user.role;
-        console.log('JWT 回调 - token 数据:', token);
+        token.name = user.name;
+        token.email = user.email;
       }
       return token;
     },
-    async session({ session, token }) {
+    session: async ({ session, token }) => {
       if (session.user) {
-        session.user.id = token.id as string;
-        session.user.userId = token.id as string;
-        session.user.role = token.role as 'comedian' | 'organizer';
-        console.log('Session 回调 - session 数据:', session.user);
+        session.user.id = token.id;
+        session.user.userId = token.id;
+        session.user.role = token.role;
+        session.user.name = token.name;
+        session.user.email = token.email;
       }
       return session;
-    },
+    }
   },
   session: {
     strategy: 'jwt',
