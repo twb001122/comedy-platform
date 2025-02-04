@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Tag, Divider } from 'antd';
+import { getImageUrl } from '@/utils/image';
 
 interface ComedianDetail {
   _id: string;
@@ -124,7 +125,7 @@ export default function ComedianDetailPage({
                 {comedian.avatar ? (
                   <div className="relative w-24 h-24">
                     <Image
-                      src={comedian.avatar}
+                      src={getImageUrl(comedian.avatar)}
                       alt={comedian.stageName}
                       fill
                       className="rounded-full object-cover"
@@ -261,7 +262,7 @@ export default function ComedianDetailPage({
                     {comedian.photos.map((photo, index) => (
                       <div key={index} className="relative pt-[100%]">
                         <Image
-                          src={photo}
+                          src={getImageUrl(photo)}
                           alt={`${comedian.stageName}的照片 ${index + 1}`}
                           fill
                           className="absolute inset-0 object-cover rounded-lg"

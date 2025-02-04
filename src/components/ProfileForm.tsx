@@ -3,16 +3,19 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/image';
+import { Session } from 'next-auth';
+
+type Props = {
+  user: Session['user'];
+};
 
 interface User {
-  id?: string;
+  id: string;
+  userId: string;
   name?: string | null;
   email?: string | null;
   role?: 'comedian' | 'organizer';
-}
-
-interface Props {
-  user: User;
 }
 
 /**
@@ -57,7 +60,9 @@ export default function ProfileForm({ user }: Props) {
   useEffect(() => {
     async function loadProfile() {
       try {
-        const response = await fetch('/api/profile');
+        const response = await fetch('/api/profile', {
+          credentials: 'include'
+        });
         if (!response.ok) {
           throw new Error('加载失败');
         }
@@ -108,19 +113,20 @@ export default function ProfileForm({ user }: Props) {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', 'avatar');
-
+    
     try {
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
+        credentials: 'include'
       });
 
       if (!response.ok) {
         throw new Error('头像上传失败');
       }
 
-      const data = await response.json();
-      setAvatar(data.url);
+      const { url: path } = await response.json();
+      setAvatar(path);
     } catch (error) {
       console.error('头像上传失败:', error);
       alert('头像上传失败，请重试');
@@ -143,19 +149,20 @@ export default function ProfileForm({ user }: Props) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('type', 'photo');
-
+      
       try {
         const response = await fetch('/api/upload', {
           method: 'POST',
-          body: formData
+          body: formData,
+          credentials: 'include'
         });
 
         if (!response.ok) {
           throw new Error('照片上传失败');
         }
 
-        const data = await response.json();
-        setPhotos(prev => [...prev, data.url]);
+        const { url: path } = await response.json();
+        setPhotos(prev => [...prev, path]);
       } catch (error) {
         console.error('照片上传失败:', error);
         alert('照片上传失败，请重试');
@@ -217,6 +224,7 @@ export default function ProfileForm({ user }: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(processedData),
       });
 
@@ -309,7 +317,7 @@ export default function ProfileForm({ user }: Props) {
               <div className="relative w-24 h-24">
                 {avatar ? (
                   <Image
-                    src={avatar}
+                    src={getImageUrl(avatar)}
                     alt="头像"
                     fill
                     className="rounded-full object-cover"
@@ -344,7 +352,7 @@ export default function ProfileForm({ user }: Props) {
               {photos.map((photo, index) => (
                 <div key={index} className="relative w-full pt-[100%]">
                   <Image
-                    src={photo}
+                    src={getImageUrl(photo)}
                     alt={`照片 ${index + 1}`}
                     fill
                     className="absolute top-0 left-0 object-cover rounded"

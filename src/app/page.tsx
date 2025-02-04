@@ -124,7 +124,7 @@ export default function Home() {
                         href="/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        个人中心
+                        演员资料卡
                       </Link>
                       <button
                         onClick={() => signOut()}
