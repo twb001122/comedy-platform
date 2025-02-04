@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { ComedianProfile } from '@/models/ComedianProfile';
 import { connectToDatabase } from '@/lib/db';
 
+export const runtime = 'nodejs';
 /**
  * 获取个人资料
  */
