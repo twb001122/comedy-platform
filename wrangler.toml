@@ -1,0 +1,9 @@
+name = "comedy-platform"
+compatibility_date = "2024-02-04"
+
+[build]
+command = "npm run build"
+
+[site]
+bucket = ".vercel/output/static"
+
