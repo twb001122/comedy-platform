@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/db';
+import { getServerSession } from 'next-auth';
+import { connectDB } from '@/lib/db';
+import { authOptions } from '@/lib/auth';
 import { ComedianProfile } from '@/models/ComedianProfile';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 /**
  * 获取单个演员详情
@@ -20,7 +20,7 @@ export async function GET(
     }
 
     console.log('正在查询演员ID:', params.id);
-    await connectToDatabase();
+    await connectDB();
 
     // 先尝试通过 _id 查询
     const comedian = await ComedianProfile.findById(params.id);
