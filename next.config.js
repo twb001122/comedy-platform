@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    // 启用独立构建模式
-    outputStandalone: true,
-  },
   images: {
     domains: ['localhost', 'xiaoleme.com', 'www.xiaoleme.com'],
     remotePatterns: [
