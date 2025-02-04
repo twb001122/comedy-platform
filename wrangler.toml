@@ -4,5 +4,13 @@ compatibility_date = "2024-02-04"
 [build]
 command = "npx @cloudflare/next-on-pages"
 
+# 添加 pages_build_output_dir 配置
+[build.upload]
+format = "service-worker"
+
+[pages]
+pages_build_output_dir = ".vercel/output/static"
+
+# 如果需要的话保留 site 配置
 [site]
 bucket = ".vercel/output/static"
